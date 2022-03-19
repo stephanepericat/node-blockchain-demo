@@ -10,11 +10,13 @@
     "prettier": "^2.6.0"
   },
   "scripts": {
-    "dev": "nodemon ./server.js",
+    "dev": "nodemon ./server.js -- 3000",
     "lintfix": "prettier --write .",
-    "start": "node ./server.js 3000"
+    "start": "node ./server.js 3001"
   },
   "dependencies": {
+    "axios": "^0.26.1",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "uuid": "^8.3.2"
   }
