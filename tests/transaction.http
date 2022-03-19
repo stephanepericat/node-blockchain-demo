@@ -1,0 +1,8 @@
+POST http://localhost:3000/transactions/new
+Content-Type: application/json
+
+{
+  "sender": "d09e3753-6348-414c-a012-8512285e0500",
+  "recipient": "682ad917-7d7e-428c-a217-9d8013061fb0",
+  "amount": 5
+}

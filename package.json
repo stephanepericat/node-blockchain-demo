@@ -1,0 +1,21 @@
+{
+  "name": "bchain",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "consola": "^2.15.3",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.0"
+  },
+  "scripts": {
+    "dev": "nodemon ./server.js",
+    "lintfix": "prettier --write .",
+    "start": "node ./server.js 3000"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "uuid": "^8.3.2"
+  }
+}

@@ -1,0 +1,18 @@
+# GET http://localhost:3000/mine
+
+# POST http://localhost:3000/transactions/new
+# Content-Type: application/json
+
+# {
+#   "sender": "d09e3753-6348-414c-a012-8512285e0500",
+#   "recipient": "682ad917-7d7e-428c-a217-9d8013061fb0"
+# }
+
+# POST http://localhost:3000/nodes/register HTTP/1.1
+# Content-Type: application/json
+
+# {
+#   "nodes": ["http://127.0.0.1:3000"]
+# }
+
+# GET http://localhost:3000/chain
