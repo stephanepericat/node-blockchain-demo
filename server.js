@@ -97,13 +97,13 @@ app.get("/", (_, res) => res.json(bc.chain));
 app.get("/chain", (_, res) => res.json(bc.chain));
 
 app.get("/mine", async (_, res) => {
-  const lastBlock = bc.lastBlock();
+  const lastBlock = bc.getLastBlock();
   const lastProof = lastBlock === 0 ? 0 : lastBlock.proof;
-  const proof = await bc.proofOfWork(lastProof);
+  const proof = await bc.mine(lastProof);
 
   bc.createTransaction(0, nodeId, 1);
 
-  const previousHash = bc.hash(lastBlock);
+  const previousHash = bc.createHash(lastBlock);
   const block = bc.createBlock(proof, previousHash);
 
   res.json(block);
@@ -125,5 +125,8 @@ app.post("/transactions/new", (req, res) => {
 
   res.status(200).json({ error: false, statusCode: 200, index });
 });
+
+app.get("/nodes/register", (_, res) => res.json("register"));
+app.get("/nodes/resolve", (_, res) => res.json("resolve"));
 
 app.listen(3000);

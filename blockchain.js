@@ -187,7 +187,7 @@
 // var blockchain = new Blockchain();
 // module.exports = blockchain;
 
-import consola from "consola";
+// import consola from "consola";
 import crypto from "crypto";
 
 export class Block {
@@ -224,7 +224,7 @@ export class Blockchain {
   constructor() {
     this._chain = [];
     this._nodes = new Set();
-    this._current_transactions = [];
+    this._currentTransactions = [];
     //Add genesis block
     this.createBlock(100, 1);
   }
@@ -237,34 +237,34 @@ export class Blockchain {
     return this._nodes;
   }
 
-  get current_transactions() {
-    return this._current_transactions;
+  get currentTransactions() {
+    return this._currentTransactions;
   }
 
-  set current_transactions(transactions) {
-    this._current_transactions = transactions;
+  set currentTransactions(transactions) {
+    this._currentTransactions = transactions;
   }
 
   createBlock(proof, previousHash = null) {
     const timestamp = new Date();
     const previousIndex = this.chain.length == 0 ? 0 : this.chain.length - 1;
     const index = this.chain.length + 1;
-    const transactions = this.current_transactions;
-    const hash = previousHash || this.hash(this.chain[previousIndex]);
+    const transactions = this.currentTransactions;
+    const hash = previousHash || this.create(this.chain[previousIndex]);
 
     const block = new Block(index, timestamp, transactions, proof, hash);
 
-    this.current_transactions = [];
+    this.currentTransactions = [];
     this.chain.push(block);
 
     return block;
   }
 
-  lastBlock() {
+  getLastBlock() {
     return this.chain.length ? this.chain[this.chain.length - 1] : 0;
   }
 
-  hash(block) {
+  createHash(block) {
     const blockString = JSON.stringify(block);
     const b64String = Buffer.from(blockString).toString("base64");
 
@@ -272,12 +272,12 @@ export class Blockchain {
   }
 
   createTransaction(sender, recipient, amount) {
-    this.current_transactions.push({ sender, recipient, amount });
+    this.currentTransactions.push({ sender, recipient, amount });
 
     return this.chain.length ? this.chain[this.chain.length - 1].index + 1 : 1;
   }
 
-  proofOfWork(lastProof) {
+  mine(lastProof) {
     let proof = 0;
 
     return new Promise((resolve) => {
@@ -298,5 +298,18 @@ export class Blockchain {
       console.log(lastProof, proof, hash);
     }
     return hash.startsWith("0000");
+  }
+
+  registerNode(address) {
+    try {
+      const parsedUrl = new URL(address);
+      this._nodes.add(parsedUrl);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  validateChain(chain) {
+    
   }
 }
